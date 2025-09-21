@@ -1,0 +1,84 @@
+<header class="bg-white shadow-lg sticky top-0 z-50">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo -->
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
+          <span class="text-white font-bold text-lg">🍽️</span>
+        </div>
+        <span class="text-2xl font-bold text-gray-800">{{ restaurantName }}</span>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex space-x-8">
+        @for (navItem of navigationItems; track navItem.path) {
+        <a
+          [routerLink]="navItem.path"
+          routerLinkActive="text-orange-500"
+          class="text-gray-700 hover:text-orange-500 transition-colors font-medium"
+        >
+          {{ navItem.label }}
+        </a>
+        }
+      </div>
+
+      <!-- CTA Button -->
+      <div class="hidden md:block">
+        <button
+          class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-semibold transition-colors"
+        >
+          Reservar
+        </button>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          (click)="toggleMobileMenu()"
+          class="text-gray-700 hover:text-orange-500 focus:outline-none"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            @if (isMobileMenuOpen()) {
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+            } @else {
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+            }
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation -->
+    @if (isMobileMenuOpen()) {
+    <div class="md:hidden mt-4">
+      <div class="flex flex-col space-y-4 pb-4 border-t border-gray-200 pt-4">
+        @for (navItem of navigationItems; track navItem.path) {
+        <a
+          [routerLink]="navItem.path"
+          (click)="closeMobileMenu()"
+          routerLinkActive="text-orange-500"
+          class="text-gray-700 hover:text-orange-500 transition-colors font-medium"
+        >
+          {{ navItem.label }}
+        </a>
+        }
+        <button
+          class="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-full font-semibold transition-colors w-full"
+        >
+          Reservar
+        </button>
+      </div>
+    </div>
+    }
+  </nav>
+</header>
